@@ -38,8 +38,16 @@ wifi:
 captive_portal:
 
 logger:
-  level: DEBUG
   baud_rate: 0
+  logs:
+    esp32.preferences: DEBUG
+    sensor: DEBUG
+    text_sensor: DEBUG
+    switch: DEBUG
+    button: DEBUG
+    number: DEBUG
+    climate: DEBUG
+    component: ERROR
 
 ota:
 
