@@ -1,12 +1,12 @@
 # Version 2.0
 substitutions:
   # Unique device ID in HA
-  deviceid: "mhi-slaapkamer" #deviceid: "mhi_woonkamer"
+  deviceid: "slaapkamer" #deviceid: "mhi_woonkamer"
   # Unique device name in HA (sensor names will be prefixed by this name)
-  devicename: "MHI-Slaapkamer" #devicename: "MHI-Woonkamer"
+  devicename: "Slaapkamer" #devicename: "MHI-Woonkamer"
 
 esphome:
-  name: mhi-slaapkamer #name: mhi-woonkamer  # Unique name  (only change in small letters)
+  name: slaapkamer #name: mhi-woonkamer  # Unique name  (only change in small letters)
   platform: ESP8266
   board: d1_mini
   platformio_options:
