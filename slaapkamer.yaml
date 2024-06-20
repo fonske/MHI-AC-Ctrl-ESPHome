@@ -50,7 +50,8 @@ logger:
     component: ERROR
 
 ota:
-
+  platform: esphome
+  
 web_server:
   port: 80
 
