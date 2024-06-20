@@ -49,7 +49,10 @@ logger:
     climate: DEBUG
     component: ERROR
 
+#update for esphome 2024.6.0
+# OTA:
 ota:
+  platform: esphome
 
 web_server:
   port: 80
