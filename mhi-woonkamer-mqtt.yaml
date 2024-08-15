@@ -30,7 +30,7 @@ mqtt:
 #  username: !secret mqtt_user
 #  password: !secret mqtt_password
 #  port: 1883
-#  reboot_timeout: 0s
+  reboot_timeout: 0s
 
 wifi:
   ssid: !secret wifi_ssid
