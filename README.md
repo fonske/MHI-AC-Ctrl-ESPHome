@@ -1,6 +1,14 @@
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/ginkage)
 [![paypal RobertJansen1](https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif)](https://www.paypal.com/donate/?hosted_button_id=TL3SFZ4P6ZDHN)
 
+# Warning:
+The previous version of MHI-AC-CTRL-ESPHome have been moved to repository MHI-AC-CTRL-ESPHome. Due to renewal of the complete code.
+Change the external links in your yaml if you want to keep using this other repository.
+
+master version = wemos d1 mini
+
+atom version = atom s3 lite
+
 # How to get started
 
 Create a new device within ESPHome builder and combine the yaml with one of the examples from the example directory, give your unit a name, configure OTA passwords and hotspot and add an api key and install!  
@@ -51,6 +59,11 @@ This will allow for lower temperature heating or cooling
 
 # Changelog:
 
+**v4.2** (2025-07)
+ - Allow configuration of pins through yaml
+ - Update calculation of Indoor Heat exchanger temperature 2 (capillary)
+ - Don't spam unit with unchanged room_temp
+ - **Deprecating set set_vertical_vanes and set_horizontal_vanes, will be removed in v4.3 use select functions for fan control**
 
 
 **v4.1** (2025-07)
