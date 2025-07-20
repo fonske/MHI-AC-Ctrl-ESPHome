@@ -6,9 +6,9 @@ substitutions:
   # If you encounter mhi_ac_ctrl_core.loop error: -2 errors, change the frame_size to 20
   frame_size: "33"
   # Pin assignment:
-  sck_pin: 14
-  mosi_pin: 13
-  miso_pin: 12
+  sck_pin: "14"
+  mosi_pin: "13"
+  miso_pin: "12"
 
 esphome:
   name: ${name}
