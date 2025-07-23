@@ -32,9 +32,9 @@ const byte opdata[][2] PROGMEM = {
 #define minTimeInternalTroom 5000              // minimal time in ms used for Troom internal sensor changes for publishing to avoid jitter 
 
 // pin defintions Atom S3
-#define SCK_PIN  8
-#define MOSI_PIN 38
-#define MISO_PIN 39
+extern int SCK_PIN;
+extern int MOSI_PIN;
+extern int MISO_PIN;
 
 // constants for the frame
 #define SB0 0
