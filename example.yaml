@@ -185,7 +185,11 @@ sensor:
  #       sorting_group_id: Status
  #       sorting_weight: 4
     current_power:
-      name: ${compressor_power}
+      name: ${compressor_current}
+      id: compressor_current
+#      web_server:
+#        sorting_group_id: Operation
+#        sorting_weight: 9
     energy_used:
       name: ${energy_used}
 #      web_server:
@@ -241,6 +245,19 @@ sensor:
       name: "Vanes"
     vanesLR_pos:
       name: "Vanes Left/Right"
+
+  - platform: template
+    name: ${compressor_power}
+    id: power
+    icon: mdi:flash
+    unit_of_measurement: W
+    device_class: power
+    state_class: measurement 
+    accuracy_decimals: 0
+    lambda: return id(compressor_current).state * 230;
+#    web_server:
+#      sorting_group_id: Operation
+#      sorting_weight: 10
 
 text_sensor:
   - platform: MhiAcCtrl
