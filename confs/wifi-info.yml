@@ -40,8 +40,8 @@ text_sensor:
     ip_address:
       name: IP
       icon: mdi:ip
-      entity_category: diagnostic
+      update_interval: 60s
     ssid:
       name: SIDD
       icon: mdi:wifi
-      entity_category: diagnostic
+      update_interval: 60s
