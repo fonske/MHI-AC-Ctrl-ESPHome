@@ -52,6 +52,20 @@ external_components:
     components: [MhiAcCtrl]
     refresh: always
 
+## remote options
+packages:
+  remote_package:
+    url: https://github.com/fonske/MHI-AC-Ctrl-ESPHome/
+    ref: master
+    refresh: always
+    files: [ 
+            #confs/onewire.yml,
+            #confs/debug.yml,
+            confs/wifi-info.yml,
+            confs/labels-en.yml,
+            #confs/labels-nl.yml,
+           ]
+           
 api:
   #encryption:
     #key: !secret api_encryption_key
