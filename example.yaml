@@ -234,32 +234,38 @@ sensor:
     vanesLR_pos:
       name: "Vanes Left/Right"
 
-  - platform: MhiAcCtrl
-    current_power:
-#      name: "Current power"
-      id: ac_current_power
-      on_value:
-        then:
-          - sensor.template.publish:
-              id: current_power
-              state: !lambda "return (id(ac_current_power).state * 230);"
+#  - platform: MhiAcCtrl
+#    current_power:
+##      name: "Current power"
+#      id: ac_current_power
+#      on_value:
+#        then:
+#          - sensor.template.publish:
+#              id: current_power
+#              state: !lambda "return (id(ac_current_power).state * 230);"
+              
+#  - platform: template
+#    name: Power
+#    id: current_power
+#    unit_of_measurement: W
+#    icon: mdi:lightning-bolt
+#    web_server:
+#      sorting_group_id: Operation
+#      sorting_weight: 10
 
-  - platform: template
-    name: Power
-    id: current_power
-    unit_of_measurement: W
-    icon: mdi:lightning-bolt
-
-  - platform: total_daily_energy
-    name: "Daily Energy"
-    power_id: current_power
-    filters:
-      # Multiplication factor from W to kW is 0.001
-      - multiply: 0.001
-      - throttle: 300s
-    unit_of_measurement: kWh
-    method: left
-    icon: mdi:lightning-bolt
+#  - platform: total_daily_energy
+#    name: "Daily Energy"
+#    power_id: current_power
+#    filters:
+#     # Multiplication factor from W to kW is 0.001
+#      - multiply: 0.001
+#      - throttle: 300s
+#    unit_of_measurement: kWh
+#    method: left
+#    icon: mdi:lightning-bolt
+#    web_server:
+#      sorting_group_id: Operation
+#      sorting_weight: 11
 
 text_sensor:
   - platform: MhiAcCtrl
