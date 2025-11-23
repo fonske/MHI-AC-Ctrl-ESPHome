@@ -1,0 +1,260 @@
+## version V4.2 Wemos D1 mini 
+substitutions:
+  name: ac-overloop
+  friendly_name:  AC Overloop
+  # Only 20 (legacy) or 33 (includes 3D auto and vertical vanes) possible.
+  # If you encounter mhi_ac_ctrl_core.loop error: -2 errors, change the frame_size to 20
+  frame_size: "33"
+  # Pin assignment:
+  sck_pin: "14"
+  mosi_pin: "13"
+  miso_pin: "12"
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+  min_version: 2024.11.0
+  platformio_options:
+    # Run CPU at 160Mhz to fix mhi_ac_ctrl_core.loop error: -2
+    board_build.f_cpu: 160000000L
+
+esp8266:
+  board: d1_mini
+
+# Enable logging
+logger:
+  level: DEBUG  ## or choose INFO for less logging messages
+  logs:
+    component: ERROR    ## to remove component MhiAcCtrl took long time - warnings
+    #mhi_ac_ctrl: ERROR  ## to remove mhi_ac_ctrl_core.loop error: -2 - warnings
+  baud_rate: 0
+
+ota:
+  - platform: esphome
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  fast_connect: true
+  min_auth_mode: wpa2
+  
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: ${name}
+    password: "configesp"
+    ap_timeout: 15s
+
+captive_portal:
+
+external_components:
+  - source: github://fonske/MHI-AC-Ctrl-ESPHome@master
+    components: [MhiAcCtrl]
+    refresh: always
+
+api:
+  #encryption:
+    #key: !secret api_encryption_key
+  reboot_timeout: 0s
+  services:
+    - service: set_external_room_temperature
+      variables:
+        temperature_value: float # temperature to set in Celsius
+      then:
+        - climate.mhi.set_external_room_temperature:
+            temperature: !lambda "return temperature_value;"
+
+# Optionally enables the ESP web server
+web_server:
+  port: 80
+  version: 3
+#  include_internal: true
+  ota: false
+#  local: true
+  sorting_groups:
+    - id: Control
+      name: "${control}"
+      sorting_weight: -30
+    - id: Operation
+      name: "${operation}"
+      sorting_weight: -20
+    - id: Status
+      name: "${status}"
+      sorting_weight: -10
+
+MhiAcCtrl:
+  frame_size: ${frame_size}
+  sck_pin: ${sck_pin}
+  mosi_pin: ${mosi_pin}
+  miso_pin: ${miso_pin}
+  initial_vertical_vanes_position: 5
+  initial_horizontal_vanes_position: 8
+  # Update the following to change the default room temp timeout
+  room_temp_timeout: 60
+
+button:
+  - platform: restart
+    name: Restart
+    entity_category: diagnostic
+
+climate:
+  - platform: MhiAcCtrl
+    name: "MHI Air Conditioner"
+    temperature_offset: true
+    visual_min_temperature: 17.0
+    visual:
+      temperature_step:
+        target_temperature: 0.5
+        current_temperature: 0.1
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
+binary_sensor:
+  - platform: MhiAcCtrl
+    defrost:
+      name: ${defrost}
+      icon: mdi:snowflake-melt
+      web_server:
+        sorting_group_id: Operation
+        sorting_weight: 13
+    vanes_3d_auto_enabled:
+      name: ${d_auto}
+      icon: mdi:video-3d
+      web_server:
+        sorting_group_id: Operation
+        sorting_weight: 12
+
+sensor:
+  - platform: MhiAcCtrl
+    outdoor_temperature:
+      name: ${outdoor_temperature}
+      web_server:
+        sorting_group_id: Operation
+        sorting_weight: 5
+    return_air_temperature:
+      name: ${return_air_temperature}
+      web_server:
+        sorting_group_id: Operation
+        sorting_weight: 1
+    outdoor_unit_fan_speed:
+      name: ${outdoor_unit_fan_speed}
+      web_server:
+        sorting_group_id: Status
+        sorting_weight: 2      
+    indoor_unit_fan_speed:
+      name: ${indoor_unit_fan_speed}
+      web_server:
+        sorting_group_id: Status
+        sorting_weight: 1
+    compressor_frequency:
+      name: ${compressor_frequency}
+      web_server:
+        sorting_group_id: Operation
+        sorting_weight: 8
+    indoor_unit_total_run_time:
+      name: ${indoor_unit_total_run_time}
+      web_server:
+        sorting_group_id: Status
+        sorting_weight: 3
+    compressor_total_run_time:
+      name: ${outdoor_unit_total_run_time}
+      web_server:
+        sorting_group_id: Status
+        sorting_weight: 4
+    current_power:
+      name: ${compressor_power}
+    energy_used:
+      name: ${energy_used}
+      web_server:
+        sorting_group_id: Operation
+        sorting_weight: 12
+    indoor_unit_thi_r1:
+      name: ${indoor_unit_u_bend_he_temp_1}
+      web_server:
+        sorting_group_id: Operation
+        sorting_weight: 2
+    indoor_unit_thi_r2:
+      name: ${indoor_unit_capillary_he_temp_2}
+      web_server:
+        sorting_group_id: Operation
+        sorting_weight: 3
+    indoor_unit_thi_r3:
+      name: ${indoor_unit_suction_header_he_temp_3}
+      web_server:
+        sorting_group_id: Operation
+        sorting_weight: 4
+    outdoor_unit_tho_r1:
+      name: ${outdoor_unit_he_temp}
+      web_server:
+        sorting_group_id: Operation
+        sorting_weight: 6
+    outdoor_unit_expansion_valve:
+      name: ${outdoor_unit_exp_valve}
+      web_server:
+        sorting_group_id: Status
+        sorting_weight: 5
+    outdoor_unit_discharge_pipe:
+      name: "${outdoor_unit_discharge_pipe}"
+      web_server:
+        sorting_group_id: Operation
+        sorting_weight: 7
+    outdoor_unit_discharge_pipe_super_heat:
+      name: ${outdoor_unit_discharge_pipe_super_heat}
+      web_server:
+        sorting_group_id: Operation
+        sorting_weight: 8
+    protection_state_number:
+      name: ${compressor_protection_code}
+      web_server:
+        sorting_group_id: Status
+        sorting_weight: 6
+    error_code:
+      name: "Error code"
+      icon: mdi:shield-alert-outline
+      web_server:
+        sorting_group_id: Status
+        sorting_weight: 7
+    vanes_pos:
+      name: "Vanes"
+    vanesLR_pos:
+      name: "Vanes Left/Right"
+
+text_sensor:
+  - platform: MhiAcCtrl
+    protection_state:
+      name: ${compressor_protection_status}
+      web_server:
+        sorting_group_id: Status
+        sorting_weight: 7
+
+select:
+  - platform: MhiAcCtrl
+    vertical_vanes:
+      name: ${vanes_up_down}
+      icon: mdi:arrow-up-down
+      web_server:
+        sorting_group_id: Control
+        sorting_weight: 3
+    horizontal_vanes:
+      name: ${vanes_left_right}
+      icon: mdi:arrow-left-right
+      web_server:
+        sorting_group_id: Control
+        sorting_weight: 2
+    fan_speed:
+      name: ${fan_speed}
+      icon: mdi:fan
+      web_server:
+        sorting_group_id: Control
+        sorting_weight: 4
+
+switch:
+  - platform: MhiAcCtrl
+    vanes_3d_auto:
+      name: ${d_auto}
+      icon: mdi:video-3d
+      web_server:
+        sorting_group_id: Control
+        sorting_weight: 5
