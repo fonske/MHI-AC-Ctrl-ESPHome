@@ -42,8 +42,6 @@ text_sensor:
     ip_address:
       name: IP
       icon: mdi:ip
-      update_interval: 60s
     ssid:
       name: SIDD
       icon: mdi:wifi
-      update_interval: 60s
