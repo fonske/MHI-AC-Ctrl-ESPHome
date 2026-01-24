@@ -44,8 +44,8 @@ substitutions:
   high: Hoog
   auto: Auto
   compressor_protection_status: Compressor beschermings status
-  vanes_control_left_right: Lamellen l/r 
-  vanes_control_up_down: Lamellen b/o
+  vanes_control_left_right: Lamellen l⁄r 
+  vanes_control_up_down: Lamellen b⁄o
   operation: Meetgegevens
   control: Bediening
   ext_temperature: Temperatuur
