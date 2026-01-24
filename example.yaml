@@ -1,7 +1,7 @@
 ## version V4.2 Wemos D1 mini 
 substitutions:
-  name: ac-overloop
-  friendly_name:  AC Overloop
+  name: ac-woonkamer
+  friendly_name:  AC Woonkamer
   # Only 20 (legacy) or 33 (includes 3D auto and vertical vanes) possible.
   # If you encounter mhi_ac_ctrl_core.loop error: -2 errors, change the frame_size to 20
   frame_size: "33"
@@ -232,7 +232,7 @@ sensor:
     vanes_pos:
       name: "Vanes"
     vanesLR_pos:
-      name: "Vanes Left/Right"
+      name: "Vanes Left⁄Right"
 
 #  - platform: MhiAcCtrl
 #    current_power:
