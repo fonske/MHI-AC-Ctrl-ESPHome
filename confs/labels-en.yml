@@ -30,9 +30,9 @@ substitutions:
   compressor_protection_code: Compressor protection code
   vanes_left_right: Vanes Left Right
   left: Left
-  left_center: Left/Center
+  left_center: Left⁄Center
   center: Center
-  center_right: Center/Right
+  center_right: Center⁄Right
   right: Right
   wide: Wide
   spot: Spot
